@@ -28,6 +28,13 @@ edit `/etc/default/cpupower`
 
 3. `makepkg -od`
 
+### to disable and remove all multilib:
+1. `pacman -R $(comm -12 <(pacman -Qq | sort) <(pacman -Slq multilib | sort))`
+
+2. `pacman -S gcc-libs base-devel`
+
+3. comment out the `[multilib]` entry in `/etc/pacman.conf` 
+
 ### To check if you have microphone
 `arecord -d 5 kati.wav`
 
