@@ -29,13 +29,13 @@
 `iptables -Z INPUT 1`
 
 ## Flushing (mass delete)
-### To flush a specific chain:
+To flush a specific chain:
 `iptables -F INPUT`
 
-### To flush all chains:
+To flush all chains:
 `iptables -F`
 
-### To flush everything (reset your firewall and accept all, but enable it):
+To flush everything (reset your firewall and accept all, but enable it):
 `iptables -P INPUT ACCEPT`
 
 `iptables -P FORWARD ACCEPT`
