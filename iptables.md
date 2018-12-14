@@ -28,7 +28,7 @@
 ### or for a specific line number of a specific chain:
 `iptables -Z INPUT 1`
 
-## Flushing (mass delete)
+### Flushing (mass delete)
 To flush a specific chain:
 `iptables -F INPUT`
 

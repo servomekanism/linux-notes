@@ -3,7 +3,7 @@
 ### git
 to view changes:
 
-```git status```
+`git status`
 
 to add changes at a new stage:
 
