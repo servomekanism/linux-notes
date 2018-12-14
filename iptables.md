@@ -1,6 +1,6 @@
 [//]: # (tags: iptables listing firewall rules chain flush clear reset)
 
-# IPTABLES
+## IPTABLES
 
 ### Listing commands
 To list the active rules by specification (input, forward, output, drop accept, etc):
