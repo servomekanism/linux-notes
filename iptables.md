@@ -59,3 +59,13 @@ To flush everything (reset your firewall and accept all, but enable it):
 `iptables -F`
 
 `iptables -X`
+
+### Routing/forwarding packets from one interface to the other:
+source is `eth1` and destination interface is `eth0`:
+
+`iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT`
+
+`iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT`
+
+`iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE`
+
