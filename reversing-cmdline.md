@@ -20,7 +20,10 @@ rar > version 5.0: 52 61 72 21 1A 07 01 00
 ```
 
 ### To dd from specific point into the file:
+
 `dd bs=1 skip=17613 if=/boot/vmlinuz-3.6.2-4 of=/tmp/vmlinux.gz`
 
 ### Or you can do binwalk all at once:
+
 `binwalk -e vmlinuz-3.6.2-4`
+
