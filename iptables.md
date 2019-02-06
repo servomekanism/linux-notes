@@ -90,7 +90,9 @@ OUTPUT.
 `filter table` has three chains (sets of rules):
 
 a. INPUT: for packets comming in the system
+
 b. OUTPUT: for packets going out of the system
+
 c. FORWARD: for packets that are routed through the system
 
 To list the filter table and all its rules:
@@ -102,11 +104,13 @@ Note that the ACCEPT is the default behavior if nothing is set.
 e.g.: to allow access from a whole subnet only from a specific iface:
 
 `iptables -A INPUT -i ens36 -s 10.0.0.0/24 -p tcp -j ACCEPT`
+
 `iptables -A OUTPUT -o ens36 -d 10.0.0.0/24 -p tcp -j ACCEPT`
 
 or, to allow `ping` to or from your machine:
 
 `iptables -A INPUT -p icmp --icmp-type any -j ACCEPT`
+
 `iptables -A OUTPUT -p icmp --icmp-type any -j ACCEPT`
 
 Note: this doesn't allow other computers to route `ping` messages through your
@@ -157,6 +161,7 @@ e.g.: to allow Internet to reach your internal SSH server on host 192.168.1.99
 on port 22:
 
 `iptables -A FORWARD -i eth1 -o eth0 -p tcp --dport 22 -j ACCEPT`
+
 `iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 22 -j DNAT 
 --to-destination 192.168.1.99`
 
