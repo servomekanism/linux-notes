@@ -201,6 +201,16 @@ we need to use the respective NAT chains:
 `iptables -t nat -I OUTPUT 1 -j LOG`
 
 
+### Policies
+The -P rules create default "policies" on what the default action should be,
+DROP or ACCEPT. The correct fw should have DROP, so after the rules we want each
+time to have, we should do:
+
+`iptables -P INPUT DROP`
+
+`iptables -P OUTPUT DROP`
+
+`iptables -P FORWARD DROP`
 
 
 
