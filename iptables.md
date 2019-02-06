@@ -23,6 +23,16 @@ To list the iptables with line numbers:
 
 `iptables -L --line-numbers`
 
+### Deleting rules
+To delete rules by rule definition. Use `iptables -S` to use its output:
+
+`iptables -D INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT`
+
+To delete rules by number (and chain):
+
+`iptables -D INPUT 12`
+
+
 ### Delete packet counters commands
 To clear the packet counts counters for all chains:
 
