@@ -6,48 +6,33 @@ gentoo installation guide -with full disk encryption- on macbook pro 9,2 (Mid 20
 - connect to the internet after booting your usb. For WPA2 network you can use
 `iwconfig` or `wpa_supplicant`
 - Partitioning
-    - setup `/dev/sda1` that will host the `/boot` partition as GPT
-    
-    `parted /dev/sda`
-    
-    `mklabel gpt`
-    
-    `mkpart ESP fat32 1049kB 538MB`
-    
-    `set 1 boot on`
-    
-    `quit`
-    
-    `mkfs.vfat -F32 /dev/sda1`
+    - setup `/dev/sda1` that will host the `/boot` partition as GPT:
+    ```
+        parted /dev/sda
+        mklabel gpt
+        mkpart ESP fat32 1049kB 538MB
+        set 1 boot on
+        quit
+        mkfs.vfat -F32 /dev/sda1
+    ```
 
-b. setup encryption `lvm` at `/dev/sda2`
-```
-fdisk /dev/sda
+    - setup encryption `lvm` at `/dev/sda2`
+    ```
+        fdisk /dev/sda
+        sda2[LVM] => Type Linux LVM
+        modprobe dm-crypt
+        cryptsetup --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 5000 --use-random --verify-passphrase luksFormat /dev/sda2
+        cryptsetup luksOpen /dev/sda2 lvm
+        pvcreate /dev/mapper/lvm
+        vgcreate gentoovg /dev/mapper/lvm
+        lvcreate -L 12GB -n swap gentoovg
+        lvcreate -l 100%FREE -n root gentoovg
+        mkswap /dev/mapper/gentoovg-swap
+        swapon /dev/mapper/gentoovg-swap
+        mkfs.ext4 /dev/mapper/gentoovg-root
+    ```
 
-sda2[LVM] => Type Linux LVM
-
-modprobe dm-crypt
-
-cryptsetup --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 5000 --use-random --verify-passphrase luksFormat /dev/sda2
-
-cryptsetup luksOpen /dev/sda2 lvm
-
-pvcreate /dev/mapper/lvm
-
-vgcreate gentoovg /dev/mapper/lvm
-
-lvcreate -L 12GB -n swap gentoovg
-
-lvcreate -l 100%FREE -n root gentoovg
-
-mkswap /dev/mapper/gentoovg-swap
-
-swapon /dev/mapper/gentoovg-swap
-
-mkfs.ext4 /dev/mapper/gentoovg-root
-```
-
-5. Installation
+- Installation
 ```
 mount /dev/mapper/gentoovg-root /mnt/gentoo
 
@@ -189,7 +174,7 @@ umount /mnt/gentoo{/boot,/sys,/proc,}
 
 reboot
 ```
-6. Systemd setup
+- Systemd setup
 
 ```
 
