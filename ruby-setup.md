@@ -13,7 +13,8 @@ curl -sSL https://get.rvm.io | bash -s stable
 
 source ~/.rvm/scripts/rvm
 
-rvm install 2.4.1 ``` 
+rvm install 2.4.1
+```
 
 (may get the exact version from .ruby-version file @ git)
 ```
