@@ -1,18 +1,24 @@
 gentoo installation guide -with full disk encryption- on macbook pro 9,2 (Mid 2012)
 ===================================================================================
-1. Download the ```current-install-amd64-minimal``` from https://www.gentoo.org/downloads/mirrors/
+- Download the ```current-install-amd64-minimal``` from https://www.gentoo.org/downloads/mirrors/
 (Make sure the mirror that you select to download it from also has the same bz2 stage 3 installer)
-2. ```dd if=install-amd64-minimal-20160707.iso of=/dev/sdd bs=8192k && sync```
-3. connect to the internet after booting your usb. For WPA2 network you can use
+- ```dd if=install-amd64-minimal-20160707.iso of=/dev/sdd bs=8192k && sync```
+- connect to the internet after booting your usb. For WPA2 network you can use
 `iwconfig` or `wpa_supplicant`
-4. Partitioning
-a. setup `/dev/sda1` that will host the `/boot` partition as GPT
-`parted /dev/sda`
-`mklabel gpt`
-`mkpart ESP fat32 1049kB 538MB`
-`set 1 boot on`
-`quit`
-`mkfs.vfat -F32 /dev/sda1`
+- Partitioning
+    - setup `/dev/sda1` that will host the `/boot` partition as GPT
+    
+    `parted /dev/sda`
+    
+    `mklabel gpt`
+    
+    `mkpart ESP fat32 1049kB 538MB`
+    
+    `set 1 boot on`
+    
+    `quit`
+    
+    `mkfs.vfat -F32 /dev/sda1`
 
 b. setup encryption `lvm` at `/dev/sda2`
 ```
