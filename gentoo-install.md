@@ -143,3 +143,4 @@ setfont ter-v16b
 nano /etc/vconsole.conf
 FONT=ter-v16b
 ```
+- Remember to use the `performance` governor as it is better for everything
