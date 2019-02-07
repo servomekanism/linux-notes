@@ -1,7 +1,7 @@
 [//]: # (tags: debian kernel grub boot error)
 ### debian fix broken kernel/grub
 
-Example assumes /dev/sda5 is the root partition of the linux installation.
+Example assumes `/dev/sda5` is the root partition of the linux installation.
 Also, assumes that you have booted with a debian live cd.
 
 
