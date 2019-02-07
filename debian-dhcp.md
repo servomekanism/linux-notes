@@ -21,7 +21,7 @@ Modify `/etc/dhcp/dhcpd.conf` to read:
 ddns-update-style none;
 default-lease-time 600;
 max-lease-time 7200;
-#no service will be provided at the VMware NAT network
+#no service will be provided at the following empty subnet entry
 subnet 172.16.248.0 netmask 255.255.255.0 {
 }
 
