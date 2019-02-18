@@ -24,3 +24,7 @@ to create a new branch:
 to push the changes to another branch:
 
 ```git push -u origin BRANCHNAME```
+
+to download from the new upstream:
+
+```git pull origin master```
