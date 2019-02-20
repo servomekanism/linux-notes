@@ -257,4 +257,3 @@ time to have, we should do:
 
 *sources*: http://linux-training.be/networking/ch14.html,
 http://linux-ip.net/pages/diagrams.htm, https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecturel
->>>>>>> cd7c1ae25deb6389f6d87cea77869e8a63e63f47
