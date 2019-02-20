@@ -1,4 +1,12 @@
 [//]: # (tags: macchanger macspoofing)
+### setup fixed interface names by editing `/etc/udev/rules.d/10-network.rules`:
+```
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="XX:XX:XX:XX:XX:XX", NAME="wlan0"
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="XX:XX:XX:XX:XX:XX", NAME="eth0"
+```
+
+### install `macchanger`
+
 ### after installing macchanger:
 1. create systemd service at `/etc/system/system/macspoof@.service`:
     ```
