@@ -1,6 +1,6 @@
 [//]: # (tags: macchanger macspoofing)
 ### after installing macchanger:
-1. create systemd service at `/etc/system/system/macspoof@.service:
+1. create systemd service at `/etc/system/system/macspoof@.service`:
     ```
     [No write since last change]
     [Unit]
