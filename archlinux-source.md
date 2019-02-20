@@ -6,5 +6,5 @@
 3. `asp export networkmanager`
 4. ```
     cd networkmanager
-    makepkg -o
+    makepkg -od
     ```
