@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [//]: # (tags: archlinux pacman source download aplay microphone arecord record backup sendEmail restore bluetooth bluez cryptsetup luks encryption)
+=======
+[//]: # (tags: archlinux pacman source download aplay microphone arecord record backup sendEmail restore bluetooth bluez cryptsetup luks encryption 7z zip)
+>>>>>>> cd7c1ae25deb6389f6d87cea77869e8a63e63f47
 
 # Arch Linux
 
@@ -28,6 +32,7 @@ edit `/etc/default/cpupower`
 
 3. `makepkg -od`
 
+<<<<<<< HEAD
 ### to disable and remove all multilib:
 1. `pacman -R $(comm -12 <(pacman -Qq | sort) <(pacman -Slq multilib | sort))`
 
@@ -35,6 +40,8 @@ edit `/etc/default/cpupower`
 
 3. comment out the `[multilib]` entry in `/etc/pacman.conf` 
 
+=======
+>>>>>>> cd7c1ae25deb6389f6d87cea77869e8a63e63f47
 ### To check if you have microphone
 `arecord -d 5 kati.wav`
 
