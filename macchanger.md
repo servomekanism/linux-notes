@@ -18,7 +18,9 @@
     WantedBy=multi-user.target
     ```
 2. enable it for each interface you want it:
-    `systemctl enable macspoof@eth0`
-    `systemctl enable macspoof@wlan0`
+    ```
+    systemctl enable macspoof@eth0
+    systemctl enable macspoof@wlan0
+    ```
 
 *source*: https://wiki.archlinux.org/index.php/MAC_address_spoofing#macchanger_2
