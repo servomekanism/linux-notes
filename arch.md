@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-[//]: # (tags: archlinux pacman source download aplay microphone arecord record backup sendEmail restore bluetooth bluez cryptsetup luks encryption)
-=======
 [//]: # (tags: archlinux pacman source download aplay microphone arecord record backup sendEmail restore bluetooth bluez cryptsetup luks encryption 7z zip)
->>>>>>> cd7c1ae25deb6389f6d87cea77869e8a63e63f47
 
 # Arch Linux
 
