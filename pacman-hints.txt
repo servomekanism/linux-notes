@@ -1,0 +1,130 @@
+## what package owns a command/package?
+pacman -Qo /bin/pkgname
+
+## Get what packages have been installed from a specific repo (e.g. multilib, core)
+paclist multilib
+
+## Maintenance commands ######### 
+pacman -Rsn `pacman -Qqdt` # Orphaned
+pacman -Sc                 # Clear uninstalled program's cache
+pacman-optimize            # Optimize pacman db
+pacman -Qk                 # Find missing files from packages
+
+## Various ################
+pacman -Qi | awk '/^Name/ {pkg=$3} /Size/ {print $4$5,pkg}' | sort -n	# List all installed packages with size  
+pacman -Qii | awk '/^MODIFIED/ {print $2}' 				# Listing changed configuration files
+pacman -Qqe | grep -vx "$(pacman -Qqm)" > installed_from_off 		# Installed packages from official repositories
+pacman -Qqm > installed_from_aur                             		# Installed packages from AUR
+xargs -a installed_from_off pacman -S --needed 				# Re-install all packages from official repos
+
+## If you mess up with "rm -rf" #####
+pacman -Qeq | pacman -S -          # If your system does not contain AUR to re-install everything
+pacman -Qdq | pacman -S --asdeps - # you should run both of these
+
+## systemctl ##
+systemctl list-unit-files	#view services
+systemctl mask unit         #mask so that it's impossible to start it
+systemctl unmask unit		#unmask
+systemctl help unit		    #help page/man
+systemct --state=failed		#systemd services that failed to start
+
+## journald ##
+journalctl -b			    #show all msgs from last boot
+journalctl -b -1		    #show all msgs from the previous boot
+journalctl -b -2		    #show all msgs from the second previous and so on
+journalctl --since="2012-10-1"	#show all msgs from date (and optional time)
+journalctl --since "20 min ago"	#show all msgs since 20 mins ago
+journalctl -f			    #follow new
+journalctl /usr/bin/something	#show all msgs by a specific executable
+journalctl _PID=1		    #show all msgs by a specific process
+journalctl -b -u sshd	    #same
+journalctl -u netcfg		#show all msgs by a specific unit
+journalctl -k			#kernel ring
+journalctl -f -l SYSLOG_FACILITY=10	#auth logs
+
+## VMWARE ##
+apply this line at /usr/bin/vmware and /usr/bin/vmplayer: 
+export LD_LIBRARY_PATH=/usr/lib/vmware/lib/libcurl.so.4
+
+here:
+if "$BINDIR"/vmware-modconfig --appname="VMware Workstation"
+--icon="vmware-workstation" &&
+   vmware_module_exists $vmmon; then
+   export LD_LIBRARY_PATH=/usr/lib/vmware/lib/libcurl.so.4
+   exec "$libdir"/bin/"vmware" "$@"
+fi
+## VMWARE ENDS ##
+
+
+## power saving ##
+1. install powertop
+2. blacklist btusb bluetooth
+3. add param at kernel boot "nmi_watchdog = 0"
+4. edit /etc/sysctl.d/laptop.conf and add "vm.laptop_mode = 5"
+5. edit /etc/udev/rules.d/70-disable_wol.rules and add 
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="eth*", RUN+="/usr/bin/ethtool -s %k wol d"
+to disable Wake On Lan 
+6. edit /etc/modprobe.d/audio_powersave.conf
+options snd_hda_intel power_save=5
+7. edit /etc/sysctl.d/dirty.conf
+vm.dirty_writeback_centisecs = 6000
+8. edit /sys/module/pcie_aspm/parameters/policy (UNSTABLE?)
+set [powersave]
+9. edit /etc/udev/rules.d/pci_pm.rules (UNSTABLE?)
+ACTION=="add", SUBSYSTEM=="pci", ATTR{power/control}="auto"
+10. pulseaudio needs to be installed to have mic for skype
+11. record voice from command line to mp3 with 320 bitrate:
+ffmpeg -f alsa -ac 2 -i pulse -acodec libmp3lame -ab 320k -y testing.mp3
+
+## Media ##
+ffmpeg -f alsa -i hw:0 -acodec libmp3lame -ab 192k -ac 1 -ar 44100 -vn meeting.mp3
+arecord -f dat | ssh -C user@host aplay -f dat		#speak on mic and listen on ssh server!!
+mplayer tv:// -vf screenshot		#take snapshot from camera and use 's' to store it
+youtube-dl -F YOUTUBEURL			#list available formats to dl with their code
+youtube-dl -f code YOUTUBEURL	 	#e.g. "-f 141" for m4a sound-only
+for i in *.m4a;do ffmpeg -i "$i" -acodec mp3 -ac 2 -ab 192k "${i%.m4a}.mp3"; done 		#to convert all m4as to mp3 192k
+
+## Hashing stuff ##
+find . -type f -name '*' -exec sha512sum '{}' + > hashes.txt #find all files and calculate their hashes
+find . -iname '.*' -type f -delete	#delete all hidden files
+
+
+## regexps ##
+if FILE is "some-file.jpg" then:
+FILE=some-file.jpg
+${FILE%.*}=some-file
+${FILE##*.}=jpg
+
+## other ##
+grep -r -i TEXTTOSEARCHINFILE	#searches all files recursively to find the text WITHIN a file
+dd if=/dev/zero of=wtf.dat bs=1M count=5 	#creates a 5 mb file
+dd if=/dev/zero of=bigfile bs=500M count=1	#creates a 500mb file
+xsetroot -cursor_name left_ptr	#if cursor disappears, mouse 
+tr -cd '[:graph:]' < /dev/urandom | head -c 30;echo		#Generates a random password with 30 characters
+
+## NEW IP COMMANDS ##
+ip link set eth0 up
+ip addr add 192.168.1.100/24 broadcast 192.168.1.255 dev eth0	#set ip address new way
+ip route add default via 192.168.1.254							#set gw new way
+
+## TCPDUMP
+- Sniff HTTP traffic for a specific host
+tcpdump -i tun0 -A -s 0 'src www.yourhost.gr and tcp port 80 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)'
+
+## External screen (projector) with xrandr
+xrandr --output DP1 --mode 832x624 --rate 75 --right-of LVDS1
+
+## Backup archlinux system ##
+1. Get explicitly installed packages:
+pacman -Qqe
+
+2. Get changed conf files 
+pacman -Qii | awk '/^MODIFIED/ {print $2}'
+
+3. Get packages installed from aur
+pacman -Qqm
+
+4. Copy other files
+/home/USERNAME/.conf/*
+/home/USERNAME/.vimrc
+/home/USERNAME/.vim/*
