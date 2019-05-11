@@ -1,6 +1,6 @@
 [//]: # (tags: archlinux pacman source download aplay microphone arecord record backup sendEmail restore bluetooth bluez cryptsetup luks encryption 7z zip)
 
-# Arch Linux
+# Arch Linuxfffe
 
 ## governor
 it is recommended to install `cpupower`
