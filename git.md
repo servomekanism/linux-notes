@@ -28,3 +28,23 @@ to push the changes to another branch:
 to download from the new upstream:
 
 ```git pull origin master```
+
+
+## to discard all and reset
+to discard all local changes and reset to master:
+
+```
+git reset --hard origin/master
+git pull origin master
+```
+
+## git diff patching
+to generate a patch from the (unchanged) changes:
+
+```
+git diff > mypatch.patch
+```
+or
+```
+git diff --cached > mypatch.patch
+```
