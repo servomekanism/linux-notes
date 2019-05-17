@@ -30,7 +30,7 @@ to download from the new upstream:
 ```git pull origin master```
 
 
-## to discard all and reset
+#### to discard all and reset
 to discard all local changes and reset to master:
 
 ```
@@ -38,7 +38,7 @@ git reset --hard origin/master
 git pull origin master
 ```
 
-## git diff patching
+#### git diff patching
 to generate a patch from the (unchanged) changes:
 
 ```
