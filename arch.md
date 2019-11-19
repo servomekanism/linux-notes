@@ -246,8 +246,12 @@ if FILE is `some-file.jpg` then:
 `cryptsetup luksKillSlot /dev/<device> 6`
 
 ### add/remove cryptsetup keys luks keyfiles - for decrypting additional (not the root) drives on boot
+First, generate the keys (let's assume that we have 2 extra drives, sdc1 and sdb1)
+
 `dd if=/dev/urandom of=<path to key file1> bs=1024 count=1`
 `dd if=/dev/urandom of=<path to key file1> bs=1024 count=1`
+
+Then, add the generated keyfiles as keys for the drives (remember cryptsetup supports up to 8 key/password slots)
 
 `cryptsetup luksAddKey /dev/sdc1 <path to key file1>`
 `cryptsetup luksAddKey /dev/sdb1 <path to key file2>`
