@@ -250,7 +250,7 @@ First, generate the keys (let's assume that we have 2 extra drives, sdc1 and sdb
 
 `dd if=/dev/urandom of=<path to key file1> bs=1024 count=1`
 
-`dd if=/dev/urandom of=<path to key file1> bs=1024 count=1`
+`dd if=/dev/urandom of=<path to key file2> bs=1024 count=1`
 
 Then, add the generated keyfiles as keys for the drives (remember cryptsetup supports up to 8 key/password slots)
 
