@@ -88,6 +88,8 @@ for i in *.m4a;do ffmpeg -i "$i" -acodec mp3 -ac 2 -ab 192k "${i%.m4a}.mp3"; don
 find . -type f -name '*' -exec sha512sum '{}' + > hashes.txt #find all files and calculate their hashes
 find . -iname '.*' -type f -delete	#delete all hidden files
 
+## compressing 7z with best flags ##
+7z a -m0=lzma2 -mx docker-vm.7z docker-vuln-testing
 
 ## regexps ##
 if FILE is "some-file.jpg" then:
