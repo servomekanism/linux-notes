@@ -234,7 +234,7 @@ if FILE is `some-file.jpg` then:
 
 `sudo cryptsetup luksClose /dev/mapper/external01`
 
-### add/remove cryptestup keys luks password
+### add/remove cryptsetup keys luks password
 `cryptsetup luksDump /dev/<device> |grep BLED`
 
 `cryptsetup luksAddKey /dev/<device>`
@@ -244,6 +244,28 @@ if FILE is `some-file.jpg` then:
 `cryptsetup luksRemoveKey /dev/<device>`
 
 `cryptsetup luksKillSlot /dev/<device> 6`
+
+### add/remove cryptsetup keys luks keyfiles - for decrypting additional (not the root) drives on boot
+First, generate the keys (let's assume that we have 2 extra drives, sdc1 and sdb1)
+
+`dd if=/dev/urandom of=<path to key file1> bs=1024 count=1`
+
+`dd if=/dev/urandom of=<path to key file2> bs=1024 count=1`
+
+Then, add the generated keyfiles as keys for the drives (remember cryptsetup supports up to 8 key/password slots)
+
+`cryptsetup luksAddKey /dev/sdc1 <path to key file1>`
+
+`cryptsetup luksAddKey /dev/sdb1 <path to key file2>`
+
+Configure crypttab to use the key file. Use absolute paths for key files: e.g:
+
+```
+# <name>       <device>                                    <password>              <options>
+disk1	       UUID=b8ad5c18-f445-495d-9095-c9ec4f9d2f37   <path to key file1> 		luks
+disk2	       UUID=b8ad5c18-f445-495d-9095-efba356e30b6   <path to key file2> 		luks
+```
+This configuration is useful when you have extra drives that you need to decrypt on boot, without typing a password. I recommend, however, having a password slot for both of them, just in case you want to physically remove them.
 
 ### rsync backup
 `rsync --exclude=*.vdi -av -h --progress SOURCE DESTINATION (without tr /)`
