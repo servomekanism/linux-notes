@@ -8,3 +8,6 @@
 
 ### mass convert in folder and rename:
 `for i in *.webm; do ffmpeg -i $i -acodec libmp3lame -aq 4 `basename $i .webm`.mp3; done`
+
+### mass convert in folder from `flac` to `mp3` and rename (works for weird file names as well)
+`for a in ./*.flac; do < /dev/null ffmpeg -i "$a" -qscale:a 0 "${a[@]/%flac/mp3}";done`
