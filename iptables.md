@@ -1,115 +1,65 @@
 [//]: # (tags: iptables listing firewall rules chain flush clear reset)
 
-# IPTABLES
-
-## Listing commands
-### To list the active rules by specification (input, forward, output, drop accept, etc):
-`iptables -S`
-
-### To list for example only the chain (INPUT, OUTPUT, FORWARD) you want do this:
-`iptables -S INPUT`
-
-### To list every chain (INPUT, OUTPUT, FORWARD) this:
-`iptables -L`
-
-### To list the packet counts:
-`iptables -L -v`
-
-### To list the iptables with line numbers:
-`iptables -L --line-numbers`
-
-## Delete packet counters commands
-### To clear the packet counts counters for all chains:
-`iptables -Z`
-
-### or for a specific chain:
-`iptables -Z INPUT`
-
-### or for a specific line number of a specific chain:
-`iptables -Z INPUT 1`
-
-## Flushing (mass delete)
-### To flush a specific chain:
-`iptables -F INPUT`
-
-### To flush all chains:
-`iptables -F`
-
-### To flush everything (reset your firewall and accept all, but enable it):
-
 ## IPTABLES
 
-### Listing commands
-To list the active rules by specification (input, forward, output, drop accept, etc):
+**Listing commands**
 
+- To list the active rules by specification (input, forward, output, drop accept, etc):
 `iptables -S`
 
-To list for example only the chain (INPUT, OUTPUT, FORWARD) you want do this:
-
+- To list for example only the chain (INPUT, OUTPUT, FORWARD) you want do this:
 `iptables -S INPUT`
 
-To list every chain (INPUT, OUTPUT, FORWARD) this:
-
+- To list every chain (INPUT, OUTPUT, FORWARD) this:
 `iptables -L`
 
-To list the packet counts:
-
+- To list the packet counts:
 `iptables -L -v`
 
-To list the iptables with line numbers:
-
+- To list the iptables with line numbers:
 `iptables -L --line-numbers`
 
-### Deleting rules
-To delete rules by rule definition. Use `iptables -S` to use its output:
+**Delete packet counters commands**
+- To clear the packet counts counters for all chains:
+`iptables -Z`
 
+- or for a specific chain:
+`iptables -Z INPUT`
+
+- or for a specific line number of a specific chain:
+`iptables -Z INPUT 1`
+
+**Deleting rules**
+
+- To delete rules by rule definition. Use `iptables -S` to use its output:
 `iptables -D INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT`
 
-To delete rules by number (and chain):
-
+- To delete rules by number (and chain):
 `iptables -D INPUT 12`
 
 
-### Delete packet counters commands
-To clear the packet counts counters for all chains:
+**Flushing (mass delete)**
 
-`iptables -Z`
-
-or for a specific chain:
-
-`iptables -Z INPUT`
-
-or for a specific line number of a specific chain:
-
-`iptables -Z INPUT 1`
-
-### Flushing (mass delete)
-To flush a specific chain:
-
+- To flush a specific chain:
 `iptables -F INPUT`
 
-To flush all chains:
-
+- To flush all chains:
 `iptables -F`
 
 To flush everything (reset your firewall and accept all, but enable it):
+```
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -t nat -F
+iptables -t mangle -F
+iptables -F
+iptables -X
+```
 
-`iptables -P INPUT ACCEPT`
+**Routing/forwarding packets from one interface to the other**
 
-`iptables -P FORWARD ACCEPT`
-
-`iptables -P OUTPUT ACCEPT`
-
-`iptables -t nat -F`
-
-`iptables -t mangle -F`
-
-`iptables -F`
-
-`iptables -X`
-
-### Routing/forwarding packets from one interface to the other:
-source is `eth1` and destination interface is `eth0`:
+source is `eth1` and destination is `eth0`:
 
 `iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT`
 
@@ -117,7 +67,8 @@ source is `eth1` and destination interface is `eth0`:
 
 `iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE`
 
-### iptables general info:
+## General
+
 By default there are **three** tables in the kernel that contain sets of rules:
 
 1. The **filter table** that is used for packtet filtering. This is the "normal"
@@ -126,11 +77,11 @@ OUTPUT.
 
 `filter table` has three chains (sets of rules):
 
-a. INPUT: for packets comming in the system
+- INPUT: for packets comming in the system
 
-b. OUTPUT: for packets going out of the system
+- OUTPUT: for packets going out of the system
 
-c. FORWARD: for packets that are routed through the system
+- FORWARD: for packets that are routed through the system
 
 To list the filter table and all its rules:
 
@@ -206,7 +157,8 @@ on port 22:
 4. The **security table** that is used for security DAC/MAC
 5. The **raw table** mainly for connection tracking and exemptions.
 
-### Logging
+**Logging**
+
 Use the LOG action to log certain things that can be later seen at the kernel
 log messages, e.g. `journalctl -f`.
 
@@ -233,7 +185,8 @@ we need to use the respective NAT chains:
 
 `iptables -t nat -I OUTPUT 1 -j LOG`
 
-### Policies
+**Policies**
+
 The -P rules create default "policies" on what the default action should be,
 DROP or ACCEPT. The correct fw should have DROP, so after the rules we want each
 time to have, we should do:
@@ -244,7 +197,9 @@ time to have, we should do:
 
 `iptables -P FORWARD DROP`
 
-*sources*: 
+-----------------------------------------------------------------------------
+
+*sources*
 
 http://linux-training.be/networking/ch14.html
 
