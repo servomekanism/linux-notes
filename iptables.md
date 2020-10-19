@@ -1,6 +1,5 @@
 [//]: # (tags: iptables listing firewall rules chain flush clear reset)
 
-<<<<<<< HEAD
 # IPTABLES
 
 ## Listing commands
@@ -37,7 +36,7 @@
 `iptables -F`
 
 ### To flush everything (reset your firewall and accept all, but enable it):
-=======
+
 ## IPTABLES
 
 ### Listing commands
@@ -95,7 +94,6 @@ To flush all chains:
 
 To flush everything (reset your firewall and accept all, but enable it):
 
->>>>>>> cd7c1ae25deb6389f6d87cea77869e8a63e63f47
 `iptables -P INPUT ACCEPT`
 
 `iptables -P FORWARD ACCEPT`
@@ -109,8 +107,6 @@ To flush everything (reset your firewall and accept all, but enable it):
 `iptables -F`
 
 `iptables -X`
-<<<<<<< HEAD
-=======
 
 ### Routing/forwarding packets from one interface to the other:
 source is `eth1` and destination interface is `eth0`:
@@ -206,13 +202,9 @@ on port 22:
 `iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 22 -j DNAT 
 --to-destination 192.168.1.99`
 
-
-
-
 3. The **mangle table** that is used for special-purpose processing of packets.
 4. The **security table** that is used for security DAC/MAC
 5. The **raw table** mainly for connection tracking and exemptions.
-
 
 ### Logging
 Use the LOG action to log certain things that can be later seen at the kernel
@@ -241,7 +233,6 @@ we need to use the respective NAT chains:
 
 `iptables -t nat -I OUTPUT 1 -j LOG`
 
-
 ### Policies
 The -P rules create default "policies" on what the default action should be,
 DROP or ACCEPT. The correct fw should have DROP, so after the rules we want each
@@ -253,7 +244,10 @@ time to have, we should do:
 
 `iptables -P FORWARD DROP`
 
+*sources*: 
 
+http://linux-training.be/networking/ch14.html
 
-*sources*: http://linux-training.be/networking/ch14.html,
-http://linux-ip.net/pages/diagrams.htm, https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecturel
+http://linux-ip.net/pages/diagrams.htm 
+
+https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecturel
