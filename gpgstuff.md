@@ -19,12 +19,8 @@ Quick'n easy gpg cheatsheet
 `gpg --allow-secret-key-import --import private.key`
 
 ### to delete a public key (from your public keyring)
-<<<<<<< HEAD
 `gpg --delete-key "someone@gmail.com"` (Note: if there is a priv key on your priv keyring associated with this
 public key you get an error. You must delete your private key for this key pair from your priv keyring first.
-=======
-`gpg --delete-key "someone@gmail.com"` (Note: if there is a priv key on your priv keyring associated with this public key you get an error. You must delete your private key for this key pair from your priv keyring first.)
->>>>>>> cd7c1ae25deb6389f6d87cea77869e8a63e63f47
 
 ### to delete a private key (from your priv keyring)
 `gpg --delete-secret-key "someone@gmail.com"`
